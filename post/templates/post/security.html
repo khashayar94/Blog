@@ -1,0 +1,62 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+
+{% for message in messages %}
+<div class="alert">
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+    {{ message }}  
+</div>
+{% endfor %}
+
+<div class="container-xl px-4 mt-4">
+    <br><br>
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Change password card-->
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="card mb-4">
+                    <div class="card-header">Change Password</div>
+                    <div class="card-body">
+                        <form>
+                            <!-- Form Group (current password)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="currentPassword">Current Password</label>
+                                <input class="form-control" name="currentPassword" id="currentPassword" type="password" placeholder="Enter current password">
+                            </div>
+                            <!-- Form Group (new password)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="newPassword">New Password</label>
+                                <input class="form-control" name="newPassword" id="newPassword" type="password" placeholder="Enter new password">
+                            </div>
+                            <!-- Form Group (confirm password)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="confirmPassword">Confirm Password</label>
+                                <input class="form-control" name="confirmPassword" id="confirmPassword" type="password" placeholder="Confirm new password">
+                            </div>
+                            <button class="btn btn-secondary" type="submit">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            <!-- Delete account card-->
+            <form action="{% url 'post:delete-account' %}" method="POST">
+                {% csrf_token %}
+                <div class="card mb-4">
+                    <div class="card-header">Delete Account</div>
+                    <div class="card-body">
+                        <div class="card-body">
+                            <p align="justify">Deleting your account is a permanent action and cannot be undone. If you are sure you want to delete your account, select the button below.</p>
+                            <button class="btn btn-danger" type="submit">I understand, delete my account</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

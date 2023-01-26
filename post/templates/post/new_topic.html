@@ -1,0 +1,41 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <article>
+                        <!-- Topic content-->
+                        <section class="mb-5">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="11" id="comment" name="comment"></textarea>
+                              </div>
+                              <label class="btn btn-secondary" style="cursor: pointer;">
+                                Upload an image<input type="file"  name="image" hidden>
+                            </label>
+                        </section>
+                    </article>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Topic widget-->
+                    <div class="card mb-4">
+                        <div class="card-header">Topic</div>
+                        <div class="card-body">
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="topic" placeholder="Enter your topic..." aria-label="Enter search term..."/>
+                                &nbsp;<button class="btn btn-secondary" type="submit">Save topic</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+{% endblock content %}

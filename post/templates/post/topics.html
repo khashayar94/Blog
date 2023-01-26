@@ -1,0 +1,109 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+<p>
+	<form class="form-inline my-2 my-lg-0 ml-3" action="{% url 'post:search_topic' %}" method="POST"> 
+		{% csrf_token %}
+		<input class="form-control mr-sm-2" type="search" placeholder="Search topics"  name="searched" aria-label="Search">
+		<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+	</form>
+</p>
+<p>
+    {% if messages %}
+        {{message}}
+    {% endif %}
+</p>
+
+	{% if searched %}
+        
+    	{% if pages %}
+
+        	{% for topic in pages %}
+
+            	{% if user.username == topic.topic_owner %}
+
+					{% include 'post/topic_card.html' %}
+
+  				{% else %}
+                	<p style="margin-left: 17px;">You are not allowed to see others' topics</p>
+            	{% endif %}
+            
+        	{% endfor %}
+                
+    	{% else %}
+        	<p style="margin-left: 17px;">No results match your search</p>
+    	{% endif %}
+
+	{% else %}
+		
+		{% if pages %}
+
+        	{% for topic in pages %}
+
+            	{% if user.username == topic.topic_owner %}
+                    
+					{% include 'post/topic_card.html' %}
+						
+  				{% else %}
+                	<p style="margin-left: 17px;">You are not allowed to see others' topics</p>
+            	{% endif %}
+        
+        	{% endfor %}
+
+    	{% else %}
+        	<p style="margin-left: 17px;">There isn't any topics yet. Make your own topic.</p>
+    	{% endif %}
+
+	{% endif %}
+
+{% if searched %}
+
+    {% if pages %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <br/>
+
+                {% if pages.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{pages.previous_page_number}}">Previous</a></li>
+                {% endif %}
+
+                {% for i in nums %}
+                    <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+                {% endfor %}
+
+                {% if pages.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{pages.next_page_number}}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{pages.paginator.num_pages}}">&raquo Last</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+
+{% else %}
+
+    {% if pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <br/>
+
+            {% if pages.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo First</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{pages.previous_page_number}}">Previous</a></li>
+            {% endif %}
+
+            {% for i in nums %}
+                <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{forloop.counter}}</a></li>
+            {% endfor %}
+
+            {% if pages.has_next %}
+                <li class="page-item"><a class="page-link" href="?page={{pages.next_page_number}}">Next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{pages.paginator.num_pages}}">&raquo Last</a></li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    {% endif %}
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+
+
+        <!-- Page content-->
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    {% if user.username == topic.topic_owner %}
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <article>
+                        <!-- Topic content-->
+                        <section class="mb-5">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="11" id="comment" name="comment"></textarea>
+                              </div>
+                              <label class="btn btn-secondary" style="cursor: pointer;">
+                                Upload an image<input type="file"  name="image" hidden>
+                            </label>
+                            <button class="btn btn-secondary" type="submit">Save post</button>
+                        </section>
+                    </article>
+                </div>    
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        {% else %}
+            <p>You are not allowed to create posts for others' topics.</p>
+        {% endif %}
+
+{% endblock content %}

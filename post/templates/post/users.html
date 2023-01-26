@@ -1,0 +1,89 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+    <br>
+
+    <div class="card">
+        <h5 class="card-header">Your Followers</h5>
+        <div class="card-body">
+            {% if loggedin_user_followers_images %}
+            
+                {% for loggedin_user_follower, loggedin_user_follower_image in loggedin_user_followers_images %}
+                    <ul>
+                        <li>
+                            <a href="{{ loggedin_user_follower_image.url }}" style="text-decoration: none;">
+                                <img src="{{ loggedin_user_follower_image.url }}" alt="" width="25" height="16"> &nbsp; 
+                            </a>
+                            {{loggedin_user_follower|capfirst}} &nbsp; 
+                            <button onclick=location.href="">Following You</button>
+                        </li>
+                    </ul>
+                {% endfor %}
+            
+            {% else %}
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You haven't any <strong>Followers</strong>.
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="card">
+        <h5 class="card-header">Followed Users</h5>
+        <div class="card-body">
+
+            {% if followings_usernames_images %}
+
+                {% for following, image in followings_usernames_images %}
+                    <ul>
+                        <li>
+                            <a href="{{ image.url }}" style="text-decoration: none;">
+                                <img src="{{ image.url }}" alt="" width="25" height="16"> &nbsp; 
+                            </a>
+                            {{ following|capfirst }} &nbsp; 
+                            <button onclick=location.href="{% url 'post:unfollow' following %}">Unfollow</button>
+                        </li>
+                    </ul>
+                {% endfor %}
+                
+            {% else %}
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; You haven't any <strong>Followed Users</strong>.
+                </p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="card">
+    <h5 class="card-header">Not Followed Users</h5>
+        <div class="card-body">
+
+            {% if unfollowings_usernames_images %}
+
+                {% for unfollowing, image in unfollowings_usernames_images %}
+                    <ul>
+                        <li>
+                            <a href="{{ image.url }}" style="text-decoration: none;">
+                                <img src="{{ image.url }}" alt="" width="25" height="16"> &nbsp;
+                            </a>
+                            {{ unfollowing|capfirst }} &nbsp; 
+                            <button onclick=location.href="{% url 'post:follow' unfollowing %}">Follow</button>
+                        </li>
+                    </ul>
+                {% endfor %}
+
+            {% else %}
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You Followed <strong>All Users</strong>
+                </p>
+            {% endif%}
+
+        </div>
+    </div>
+                           
+{% endblock content %}
+
+
+

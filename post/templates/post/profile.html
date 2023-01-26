@@ -1,0 +1,71 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+
+    {% if loggedin_user.username == user_profile.user %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="container-xl px-4 mt-4">
+            <br><br>
+            <div class="row"> 
+                <div class="col-xl-4">  
+                    <!-- Profile picture card-->
+                    <div class="card mb-4 mb-xl-0">
+                        <div class="card-header">Profile Picture</div>
+                        <div class="card-body text-center">
+                            <!-- Profile picture image-->
+                            <img class="img-account-profile rounded-circle mb-2" src="{{ user_profile.user_image.url }}" alt="" width="150" height="150">
+                            <!-- Profile picture help block-->
+                            <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                            <!-- Profile picture upload button-->
+                            <label class="btn btn-secondary" style="cursor: pointer;">
+                                Upload an image<input type="file"  name="image" hidden>
+                            </label>
+                        </div>
+                    </div> 
+                </div>
+                <div class="col-xl-8">
+                    <!-- Account details card-->
+                    <div class="card mb-4">
+                        <div class="card-header">Account Details</div>
+                        <div class="card-body">
+                            <!-- Form Group (username)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputUsername">Username (how your name will appear to other users on the site)</label>
+                                <input class="form-control" name="username" id="inputUsername" type="text" placeholder="Enter your username" value="{{user.username}}">
+                            </div>
+                            <!-- Form Row-->
+                            <div class="row gx-3 mb-3">
+                                <!-- Form Group (first name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputFirstName">First name</label>
+                                    <input class="form-control" name="first_name" id="inputFirstName" type="text" placeholder="Enter your first name" value="{{loggedin_user.first_name}}">
+                                </div>
+                                <!-- Form Group (last name)-->
+                                <div class="col-md-6">
+                                    <label class="small mb-1" for="inputLastName">Last name</label>
+                                    <input class="form-control" name="last_name" id="inputLastName" type="text" placeholder="Enter your last name" value="{{loggedin_user.last_name}}">
+                                </div>
+                            </div>
+                            <!-- Form Row        -->
+                            <div class="row gx-3 mb-3">
+                            </div>
+                            <!-- Form Group (email address)-->
+                            <div class="mb-3">
+                                <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                <input class="form-control" name="email" id="inputEmailAddress" type="email" placeholder="Enter your email address" value="{{loggedin_user.email}}">
+                            </div>
+                            <!-- Save changes button-->
+                            <button class="btn btn-secondary" type="submit">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% else %}  
+        <p>You are not allowed to see others' profiles.</p>
+    {% endif %}
+    
+
+{% endblock content %}

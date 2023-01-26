@@ -1,0 +1,67 @@
+{% extends 'post/index.html' %}
+
+{% block content %}
+
+    {% if user.username == original_topic.topic_owner %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                <article>
+                    <!-- Topic content-->
+                    <section class="mb-5">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="11" id="comment" name="comment">{{original_topic.topic_body}}</textarea>
+                          </div>
+                          <label class="btn btn-secondary" style="cursor: pointer;">
+                            Upload an image<input type="file"  name="image" hidden value="{{original_topic.topic_img}}">
+                        </label>
+                    </section>
+                </article>
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Topic widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Topic</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="topic" placeholder="Enter your topic..." value="{{original_topic.topic}}" aria-label="Enter search term..."/>
+                            &nbsp;<button class="btn btn-secondary" type="submit">Save topic</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+                <!-- Categories widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Categories</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#!">Web Design</a></li>
+                                    <li><a href="#!">HTML</a></li>
+                                    <li><a href="#!">Freebies</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul class="list-unstyled mb-0">
+                                    <li><a href="#!">JavaScript</a></li>
+                                    <li><a href="#!">CSS</a></li>
+                                    <li><a href="#!">Tutorials</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <p>You are not allowed to edit others' topics.</p>
+    {% endif %}
+    
+{% endblock content %}
